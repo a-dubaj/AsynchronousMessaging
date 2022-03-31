@@ -12,7 +12,6 @@ public class RabbitMQQueueConfiguration {
     Queue exampleQueue() {
         return new Queue("ExampleQueue", false);
     }
-
     @Bean
     Queue example2andQueue() {
         return QueueBuilder.durable("Example2ndQueue")
