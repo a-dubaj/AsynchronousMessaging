@@ -1,0 +1,35 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: asyncmsg-rabbitmq
+    network_mode: host
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  app:
+    image: maven:3.9-eclipse-temurin-17
+    container_name: asyncmsg-app
+    network_mode: host
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+      - m2-cache:/root/.m2
+    environment:
+      SPRING_RABBITMQ_HOST: localhost
+      SPRING_RABBITMQ_PORT: "5672"
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      SERVER_PORT: "8080"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    command: ["bash", "-lc", "chmod +x mvnw && ./mvnw -q -DskipTests spring-boot:run"]
+
+volumes:
+  m2-cache:
