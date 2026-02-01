@@ -11,6 +11,24 @@ This repository is a hands-on example of **asynchronous messaging** using **Java
 
 The project includes a **Docker Compose** setup that starts RabbitMQ and runs the Spring Boot application using the Maven Wrapper.
 
+![RabbitMQ Architecture](assets/rabbitmq-architecture.jpg)
+
+
+## Project Structure
+
+```bash
+AsynchronousMessaging/
+├── assets/
+│   └── rabbitmq-architecture.jpg    # Architecture diagram
+├── src/
+│   ├── main/
+│   │   ├── java/                     # Source code (producer/consumer/config)
+│   │   └── resources/                # Spring configuration
+│   └── test/                         # Unit and integration tests
+├── docker-compose.yml                # Docker setup
+├── pom.xml                           # Maven dependencies
+└── README.md                         # This file
+```
 ---
 
 ## Tech Stack
